@@ -9,6 +9,9 @@
     <modules>
         <module>event-bus</module>
 		<module>library</module>
+		<module>order</module>
+		<module>payment</module>
+		<module>order-service-client</module>
 	</modules>
 
     <parent>
