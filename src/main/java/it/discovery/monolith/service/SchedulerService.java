@@ -2,7 +2,9 @@ package it.discovery.monolith.service;
 
 import it.discovery.monolith.domain.Notification;
 import it.discovery.monolith.repository.OrderRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class SchedulerService {
 	private OrderRepository orderRepository;
 

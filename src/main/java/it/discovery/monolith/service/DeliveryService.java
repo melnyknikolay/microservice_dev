@@ -5,7 +5,9 @@ import java.time.LocalDateTime;
 import it.discovery.monolith.domain.Notification;
 import it.discovery.monolith.domain.Order;
 import it.discovery.monolith.repository.OrderRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class DeliveryService {
 	private OrderRepository orderRepository;
 	

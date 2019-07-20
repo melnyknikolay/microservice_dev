@@ -3,7 +3,9 @@ package it.discovery.monolith.service;
 import it.discovery.monolith.domain.Notification;
 import it.discovery.monolith.domain.Order;
 import it.discovery.monolith.repository.OrderRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PaymentService {
 	private OrderRepository orderRepository;
 	
