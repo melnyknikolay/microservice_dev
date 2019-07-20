@@ -1,11 +1,14 @@
 package it.discovery.event;
 
-import lombok.Value;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.context.ApplicationEvent;
 
 import java.time.LocalDateTime;
 
-@Value
-public class NotificationCreatedEvent {
+@Getter
+@Setter
+public class NotificationCreatedEvent extends ApplicationEvent {
     private String recipient;
 
     private String email;
@@ -15,4 +18,8 @@ public class NotificationCreatedEvent {
     private String text;
 
     private LocalDateTime created = LocalDateTime.now();
+
+    public NotificationCreatedEvent(Object source) {
+        super(source);
+    }
 }

@@ -1,6 +1,8 @@
 package it.discovery.order.service;
 
-import it.discovery.monolith.domain.Notification;
+import it.discovery.event.NotificationCreatedEvent;
+import it.discovery.event.OrderCompletedEvent;
+import it.discovery.event.bus.EventBus;
 import it.discovery.order.domain.Order;
 import it.discovery.order.domain.OrderItem;
 import it.discovery.order.repository.CustomerRepository;
@@ -19,38 +21,37 @@ public class OrderService {
 
     private final CustomerRepository customerRepository;
 
+    private final EventBus eventBus;
+
     public void complete(int orderId) {
-        /*orderRepository.findById(orderId).ifPresent(order -> {
-            paymentService.pay(order);
+        orderRepository.findById(orderId).ifPresent(order -> {
+            eventBus.sendEvent(new OrderCompletedEvent(orderId));
 
-            orderRepository.save(order);
+            NotificationCreatedEvent notificationEvent = new NotificationCreatedEvent(this);
+            notificationEvent.setEmail(order.getCustomer().getEmail());
+            notificationEvent.setRecipient(order.getCustomer().getName());
+            notificationEvent.setTitle("Order " + order.getId() + " is completed");
+            notificationEvent.setText("Hi/n. Your order has been completed");
 
-            Notification notification = new Notification();
-            notification.setEmail(order.getCustomer().getEmail());
-            notification.setRecipient(order.getCustomer().getName());
-            notification.setTitle("Order " + order.getId() + " is completed");
-            notification.setText("Hi/n. Your order has been completed");
-
-            notificationService.sendNotification(notification);
-        });*/
+            eventBus.sendEvent(notificationEvent);
+        });
     }
 
     public void cancel(int orderId) {
-        /*orderRepository.findById(orderId).ifPresent(order -> {
+        orderRepository.findById(orderId).ifPresent(order -> {
             if (order != null) {
                 order.setCancelled(true);
                 orderRepository.save(order);
 
-                Notification notification = new Notification();
+                NotificationCreatedEvent notification = new NotificationCreatedEvent(this);
                 notification.setEmail(order.getCustomer().getEmail());
                 notification.setRecipient(order.getCustomer().getName());
                 notification.setTitle("Order " + order.getId() + " is canceled");
                 notification.setText("Hi/n. Your order has been canceled");
 
-                notificationService.sendNotification(notification);
-
+                eventBus.sendEvent(notification);
             }
-        });*/
+        });
     }
 
     public Order createOrder(int bookId, int number, int customerId, double price) {
