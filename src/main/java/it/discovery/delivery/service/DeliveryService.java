@@ -21,6 +21,7 @@ public class DeliveryService {
 	private final EventBus eventBus;
 	
 	public void deliver(int orderId) {
+		//TODO use batching for orders delivery
 		Order order = null; //
 		System.out.println("Delivering order to customer ...");
 
@@ -31,7 +32,7 @@ public class DeliveryService {
 		notification.setRecipient(order.getCustomer().getName());
 		notification.setTitle("Order " + order.getId() + " is delivered");
 		notification.setText("Hi/n. Your order has been delivered");
-		
+
 		eventBus.sendEvent(notification);
 
 		System.out.println("Order delivered!");

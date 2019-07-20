@@ -28,6 +28,9 @@ public class OrderService {
 
     public void complete(int orderId) {
         orderRepository.findById(orderId).ifPresent(order -> {
+            order.setCompleted(true);
+            orderRepository.save(order);
+
             eventBus.sendEvent(new OrderCompletedEvent(orderId));
 
             NotificationCreatedEvent notificationEvent = new NotificationCreatedEvent(this);

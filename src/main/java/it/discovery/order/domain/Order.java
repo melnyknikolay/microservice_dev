@@ -37,6 +37,8 @@ public class Order {
 
     private double deliveryPrice;
 
+    private boolean completed;
+
     public double getAmount() {
         return items.stream().mapToDouble(item -> item.getPrice() * item.getNumber()).sum();
     }

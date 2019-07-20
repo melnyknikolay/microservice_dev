@@ -11,9 +11,11 @@ import it.discovery.monolith.domain.Book;
 import it.discovery.monolith.domain.Customer;
 import it.discovery.monolith.repository.BookRepository;
 import it.discovery.monolith.repository.CustomerRepository;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableJpaRepositories("it.discovery.monolith.repository")
+@EnableScheduling
 public class MonolithApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MonolithApplication.class, args);
