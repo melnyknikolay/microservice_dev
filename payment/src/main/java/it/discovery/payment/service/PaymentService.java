@@ -24,7 +24,7 @@ public class PaymentService {
 
         paymentProvider.charge(order);
 
-        eventBus.sendEvent(new OrderPayedEvent(order.getId()));
+        eventBus.sendEvent(new OrderPayedEvent(order.getId(), this));
 
         NotificationCreatedEvent notification = new NotificationCreatedEvent(this);
         notification.setEmail(order.getCustomer().getEmail());

@@ -31,7 +31,7 @@ public class OrderService {
             order.setCompleted(true);
             orderRepository.save(order);
 
-            eventBus.sendEvent(new OrderCompletedEvent(orderId));
+            eventBus.sendEvent(new OrderCompletedEvent(orderId, this));
 
             NotificationCreatedEvent notificationEvent = new NotificationCreatedEvent(this);
             notificationEvent.setEmail(order.getCustomer().getEmail());

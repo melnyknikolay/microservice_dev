@@ -1,10 +1,10 @@
 version: '3.6'
 
 services:
-  client:
+  library:
     build:
       context: .
-      dockerfile: src/main/resources/library.dockerfile
+      dockerfile: library/src/main/resources/library.dockerfile
     expose:
       - 8080
     ports:

@@ -21,7 +21,7 @@ public class DeliveryService {
         OrderDTO order = null; //
         System.out.println("Delivering order to customer ...");
 
-        eventBus.sendEvent(new OrderDeliveredEvent(order.getId(), LocalDateTime.now()));
+        eventBus.sendEvent(new OrderDeliveredEvent(order.getId(), LocalDateTime.now(), this));
 
         NotificationCreatedEvent notification = new NotificationCreatedEvent(this);
         notification.setEmail(order.getCustomer().getEmail());
