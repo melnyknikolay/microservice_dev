@@ -94,11 +94,12 @@ public class OrderService {
         });
     }
 
+    @EventListener
     public void onOrderDelivered(OrderDeliveredEvent event) {
         int orderId = event.getOrderId();
         orderRepository.findById(orderId).ifPresent(order -> {
             order.setDelivered(true);
-            order.setDeliveryDate(LocalDateTime.now());
+            order.setDeliveryDate(event.getDeliveryDate());
 
             orderRepository.save(order);
         });
