@@ -2,6 +2,7 @@ package it.discovery.order.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.discovery.order.OrderApplication;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -26,6 +27,7 @@ public class ShopControllerTest {
     }
 
     @Test
+    @Disabled
     void getLibrary_returnsLibraryName() throws Exception {
         ResultActions resultActions = mockMvc.perform(get("/shop/library"));
 
