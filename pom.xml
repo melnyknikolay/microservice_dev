@@ -12,7 +12,8 @@
 		<module>order</module>
 		<module>payment</module>
 		<module>order-service-client</module>
-	</modules>
+        <module>delivery</module>
+    </modules>
 
     <parent>
 		<groupId>org.springframework.boot</groupId>

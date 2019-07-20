@@ -4,7 +4,7 @@ import it.discovery.event.NotificationCreatedEvent;
 import it.discovery.event.OrderDeliveredEvent;
 import it.discovery.event.OrderPayedEvent;
 import it.discovery.event.bus.EventBus;
-import it.discovery.monolith.domain.Order;
+import it.discovery.order.dto.OrderDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ public class DeliveryService {
 
     public void deliver(int orderId) {
         //TODO use batching for orders delivery
-        Order order = null; //
+        OrderDTO order = null; //
         System.out.println("Delivering order to customer ...");
 
         eventBus.sendEvent(new OrderDeliveredEvent(order.getId(), LocalDateTime.now()));
