@@ -33,9 +33,9 @@ public class OrderController {
         return orderService.findOrders();
     }
 
-    @GetMapping
-    public Order findOrderById(@PathVariable int orderId) {
-        return orderService.findOrderById(orderId);
+    @GetMapping("/{id}")
+    public Order findOrderById(@PathVariable int id) {
+        return orderService.findOrderById(id);
     }
 
     public int createOrder(int bookId, int number, int customerId, double price) {

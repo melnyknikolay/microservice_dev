@@ -2,12 +2,14 @@ package it.discovery.order.service;
 
 import it.discovery.event.NotificationCreatedEvent;
 import it.discovery.event.OrderCompletedEvent;
+import it.discovery.event.OrderPayedEvent;
 import it.discovery.event.bus.EventBus;
 import it.discovery.order.domain.Order;
 import it.discovery.order.domain.OrderItem;
 import it.discovery.order.repository.CustomerRepository;
 import it.discovery.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -78,4 +80,12 @@ public class OrderService {
         return orderRepository.getOne(orderId);
     }
 
+    @EventListener
+    public void onOrderPayed(OrderPayedEvent event) {
+        int orderId = event.getOrderId();
+        orderRepository.findById(orderId).ifPresent(order -> {
+            order.setPayed(true);
+            orderRepository.save(order);
+        });
+    }
 }

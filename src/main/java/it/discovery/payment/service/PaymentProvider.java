@@ -14,6 +14,8 @@ public class PaymentProvider {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		System.out.println("Charging credit card ... " + order.getCustomer().getCardNumber());
+
 		order.getCustomer().setBalance(order.getCustomer().getBalance() - order.getAmount());
 
 	}
