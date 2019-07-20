@@ -41,6 +41,4 @@ public class PaymentService {
     public void onOrderCompleted(OrderCompletedEvent event) {
         pay(event.getOrderId());
     }
-
-
 }

@@ -2,6 +2,7 @@ package it.discovery.order.service;
 
 import it.discovery.event.NotificationCreatedEvent;
 import it.discovery.event.OrderCompletedEvent;
+import it.discovery.event.OrderDeliveredEvent;
 import it.discovery.event.OrderPayedEvent;
 import it.discovery.event.bus.EventBus;
 import it.discovery.order.domain.Order;
@@ -88,4 +89,15 @@ public class OrderService {
             orderRepository.save(order);
         });
     }
+
+    public void onOrderDelivered(OrderDeliveredEvent event) {
+        int orderId = event.getOrderId();
+        orderRepository.findById(orderId).ifPresent(order -> {
+            order.setDelivered(true);
+            order.setDeliveryDate(LocalDateTime.now());
+
+            orderRepository.save(order);
+        });
+    }
+
 }
