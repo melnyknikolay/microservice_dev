@@ -1,7 +1,9 @@
 package it.discovery.payment.service;
 
 import it.discovery.order.dto.OrderDTO;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PaymentProvider {
 
     public void charge(OrderDTO order) {
