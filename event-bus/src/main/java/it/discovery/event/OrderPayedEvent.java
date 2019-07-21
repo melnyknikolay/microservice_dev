@@ -1,16 +1,12 @@
 package it.discovery.event;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
-import lombok.Value;
-import org.springframework.context.ApplicationEvent;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class OrderPayedEvent extends ApplicationEvent {
+@AllArgsConstructor
+@NoArgsConstructor
+public class OrderPayedEvent {
     private int orderId;
-
-    public OrderPayedEvent(int orderId, Object source) {
-        super(source);
-        this.orderId = orderId;
-    }
 }

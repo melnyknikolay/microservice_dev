@@ -1,13 +1,11 @@
 package it.discovery.payment.service;
 
 import it.discovery.event.NotificationCreatedEvent;
-import it.discovery.event.OrderCompletedEvent;
 import it.discovery.event.OrderPayedEvent;
-import it.discovery.event.bus.EventBus;
+import it.discovery.event.messaging.MessageProducer;
 import it.discovery.order.client.order.OrderFacade;
 import it.discovery.order.dto.OrderDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class PaymentService {
     private final PaymentProvider paymentProvider;
 
-    private final EventBus eventBus;
+    private final MessageProducer messageProducer;
 
     private final OrderFacade orderFacade;
 
@@ -30,7 +28,7 @@ public class PaymentService {
 
         paymentProvider.charge(order);
 
-        eventBus.sendEvent(new OrderPayedEvent(order.getId(), this));
+        messageProducer.sendEvent(new OrderPayedEvent(order.getId()));
 
         NotificationCreatedEvent notification = new NotificationCreatedEvent(this);
         notification.setEmail(order.getCustomer().getEmail());
@@ -38,7 +36,7 @@ public class PaymentService {
         notification.setTitle("Order " + order.getId() + " was payed");
         notification.setText("Hi/n. Your order was payed successfully");
 
-        eventBus.sendEvent(notification);
+        messageProducer.sendEvent(notification);
         System.out.println("Charging completed");
     }
 

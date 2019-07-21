@@ -1,10 +1,12 @@
 package it.discovery.payment.service.config;
 
+import it.discovery.event.OrderCompletedEvent;
 import it.discovery.payment.service.PaymentService;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.messaging.handler.annotation.Payload;
 
 @Configuration
 public class KafkaConfiguration {
@@ -13,9 +15,7 @@ public class KafkaConfiguration {
     private PaymentService paymentService;
 
     @KafkaListener(groupId = "payment.id", topics = "orders")
-    public void onOrderCompleted(ConsumerRecord<String, Object> consumerRecord) {
-        System.out.println("Key " + consumerRecord.key());
-        System.out.println("Value " + consumerRecord.value());
-        //paymentService.pay(event.getOrderId());
+    public void onOrderCompleted(@Payload OrderCompletedEvent event) {
+        paymentService.pay(event.getOrderId());
     }
 }

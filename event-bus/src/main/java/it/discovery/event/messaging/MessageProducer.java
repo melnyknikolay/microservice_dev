@@ -1,4 +1,4 @@
-package it.discovery.order.messaging;
+package it.discovery.event.messaging;
 
 import it.discovery.event.OrderCompletedEvent;
 import lombok.RequiredArgsConstructor;
@@ -11,8 +11,8 @@ import org.springframework.util.concurrent.ListenableFuture;
 public class MessageProducer {
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
-    public void sendEvent(OrderCompletedEvent orderCompletedEvent) {
-        ListenableFuture future = kafkaTemplate.send("orders", orderCompletedEvent);
+    public void sendEvent(Object event) {
+        ListenableFuture future = kafkaTemplate.send("orders", event);
         future.addCallback(success -> System.out.println("Success"), err -> System.err.println("Error: " + err));
     }
 }
