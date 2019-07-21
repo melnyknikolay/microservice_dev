@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -21,7 +22,8 @@ public class OrderClient implements OrderFacade {
 
     @Override
     public List<OrderDTO> findAll() {
-        return restTemplate.getForObject(baseUrl, List.class);
+        return Arrays.asList(
+                restTemplate.getForObject(baseUrl, OrderDTO[].class));
     }
 
     @Override
