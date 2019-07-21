@@ -6,10 +6,7 @@ import it.discovery.order.domain.Order;
 import it.discovery.order.dto.OrderDTO;
 import it.discovery.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,7 +22,8 @@ public class OrderController {
         orderService.addBook(orderId, bookId, number, price);
     }
 
-    public void completeOrder(int orderId) {
+    @PutMapping("{orderId}")
+    public void completeOrder(@PathVariable int orderId) {
         orderService.complete(orderId);
     }
 
@@ -43,7 +41,9 @@ public class OrderController {
         return mapper.map(orderService.findOrderById(id), OrderDTO.class);
     }
 
-    public int createOrder(int bookId, int number, int customerId, double price) {
+    @PostMapping
+    public int createOrder(@RequestParam int bookId, @RequestParam int number, @RequestParam int customerId,
+                           @RequestParam double price) {
         return orderService.createOrder(bookId, number, customerId, price).getId();
     }
 }
