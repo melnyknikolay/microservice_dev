@@ -10,4 +10,8 @@ public class OrderDTO {
 
     //TODO verify mapping
     private CustomerDTO customer;
+
+    private boolean cancelled;
+
+    private boolean completed;
 }

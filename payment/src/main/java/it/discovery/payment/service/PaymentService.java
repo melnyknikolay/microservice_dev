@@ -4,10 +4,9 @@ import it.discovery.event.NotificationCreatedEvent;
 import it.discovery.event.OrderCompletedEvent;
 import it.discovery.event.OrderPayedEvent;
 import it.discovery.event.bus.EventBus;
-import it.discovery.order.dto.CustomerDTO;
+import it.discovery.order.client.OrderFacade;
 import it.discovery.order.dto.OrderDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.event.EventListener;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +17,16 @@ public class PaymentService {
 
     private final EventBus eventBus;
 
+    private final OrderFacade orderFacade;
+
     public void pay(int id) {
         System.out.println("Starting payment for order " + id);
-        OrderDTO order = null; // taken from order service
-        CustomerDTO customer = null;
-        System.out.println("Charging " + order.getAmount() + " from credit card " + customer.getCardNumber());
+        OrderDTO order = orderFacade.findById(id);
+        if (order == null || order.isCancelled()) {
+            //TODO add logging/error handling
+            return;
+        }
+        System.out.println("Charging " + order.getAmount() + " from credit card " + order.getCustomer().getCardNumber());
 
         paymentProvider.charge(order);
 
