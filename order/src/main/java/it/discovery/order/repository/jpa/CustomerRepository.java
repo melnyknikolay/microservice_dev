@@ -1,4 +1,4 @@
-package it.discovery.order.repository;
+package it.discovery.order.repository.jpa;
 
 import it.discovery.order.domain.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;

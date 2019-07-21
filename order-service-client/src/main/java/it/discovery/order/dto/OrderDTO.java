@@ -1,8 +1,10 @@
 package it.discovery.order.dto;
 
 import lombok.Data;
+import org.springframework.data.redis.core.RedisHash;
 
 @Data
+@RedisHash("orders")
 public class OrderDTO {
     private int id;
 

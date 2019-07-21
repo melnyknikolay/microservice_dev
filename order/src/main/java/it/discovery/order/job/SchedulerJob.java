@@ -2,7 +2,6 @@ package it.discovery.order.job;
 
 import it.discovery.event.NotificationCreatedEvent;
 import it.discovery.event.bus.EventBus;
-import it.discovery.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;

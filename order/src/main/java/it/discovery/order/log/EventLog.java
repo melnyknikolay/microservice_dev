@@ -1,6 +1,8 @@
 package it.discovery.order.log;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -23,4 +25,10 @@ public class EventLog {
     private int entityId;
 
     private String body;
+
+    public EventLog(String type, int entityId, String body) {
+        this.type = type;
+        this.entityId = entityId;
+        this.body = body;
+    }
 }

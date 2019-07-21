@@ -2,19 +2,26 @@ package it.discovery.order.controller;
 
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import com.github.dozermapper.core.Mapper;
-import it.discovery.order.domain.Order;
 import it.discovery.order.dto.OrderDTO;
+import it.discovery.order.repository.redis.OrderRepository;
 import it.discovery.order.service.OrderService;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("orders")
 public class OrderController {
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private OrderRepository orderRepository;
 
     private final Mapper mapper = DozerBeanMapperBuilder.buildDefault();
 
@@ -32,13 +39,13 @@ public class OrderController {
     }
 
     @GetMapping
-    public List<Order> findOrders() {
-        return orderService.findOrders();
+    public List<OrderDTO> findOrders() {
+        return orderRepository.findAll();
     }
 
     @GetMapping("/{id}")
     public OrderDTO findOrderById(@PathVariable int id) {
-        return mapper.map(orderService.findOrderById(id), OrderDTO.class);
+        return orderRepository.findById(id).orElse(null);
     }
 
     @PostMapping
