@@ -4,7 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.discovery.event.DomainEvent;
 import it.discovery.event.OrderCompletedEvent;
-import it.discovery.event.bus.EventBus;
+import it.discovery.event.OrderDeliveredEvent;
+import it.discovery.event.OrderPayedEvent;
 import it.discovery.event.messaging.MessageProducer;
 import it.discovery.order.command.CancelOrderCommand;
 import it.discovery.order.command.CompletedOrderCommand;
@@ -13,6 +14,8 @@ import it.discovery.order.log.EventLog;
 import it.discovery.order.repository.jpa.CustomerRepository;
 import it.discovery.order.repository.jpa.EventLogRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,8 +30,6 @@ public class OrderService {
     private final CustomerRepository customerRepository;
 
     private final MessageProducer messageProducer;
-
-    private final EventBus eventBus;
 
     private final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
@@ -95,25 +96,25 @@ public class OrderService {
 //        });
     }
 
-//    @KafkaListener(groupId = "order.id", topics = "orders")
-//    public void onOrderPayed(@Payload OrderPayedEvent event) {
-//        int orderId = event.getOrderId();
+    @KafkaListener(groupId = "order.id", topics = "orders")
+    public void onOrderPayed(@Payload OrderPayedEvent event) {
+        int orderId = event.getOrderId();
 //        orderRepository.findById(orderId).ifPresent(order -> {
 //            order.setPayed(true);
 //            order.getCustomer().setBalance(order.getCustomer().getBalance() - order.getAmount());
 //            orderRepository.save(order);
 //        });
-//    }
-//
-//    @KafkaListener(groupId = "order.id", topics = "orders")
-//    public void onOrderDelivered(@Payload OrderDeliveredEvent event) {
-//        int orderId = event.getOrderId();
+    }
+
+    @KafkaListener(groupId = "order.id", topics = "orders")
+    public void onOrderDelivered(@Payload OrderDeliveredEvent event) {
+        int orderId = event.getOrderId();
 //        orderRepository.findById(orderId).ifPresent(order -> {
 //            order.setDelivered(true);
 //            order.setDeliveryDate(event.getDeliveryDate());
 //
 //            orderRepository.save(order);
 //        });
-//    }
+    }
 
 }
