@@ -19,7 +19,7 @@ public class Order {
 
     private LocalDateTime createdAt;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<OrderItem> items;
 
     private LocalDateTime orderDate;

@@ -69,6 +69,8 @@ public class OrderService {
         order.setOrderDate(LocalDateTime.now());
         order.setCustomer(customerRepository.getOne(customerId));
 
+        orderRepository.save(order);
+
         return order;
     }
 
