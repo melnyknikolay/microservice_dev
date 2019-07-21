@@ -8,6 +8,7 @@ import it.discovery.order.dto.CustomerDTO;
 import it.discovery.order.dto.OrderDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +19,7 @@ public class PaymentService {
     private final EventBus eventBus;
 
     public void pay(int id) {
+        System.out.println("Starting payment for order " + id);
         OrderDTO order = null; // taken from order service
         CustomerDTO customer = null;
         System.out.println("Charging " + order.getAmount() + " from credit card " + customer.getCardNumber());
@@ -36,7 +38,7 @@ public class PaymentService {
         System.out.println("Charging completed");
     }
 
-    @EventListener
+    @KafkaListener(topics = "orders")
     public void onOrderCompleted(OrderCompletedEvent event) {
         pay(event.getOrderId());
     }

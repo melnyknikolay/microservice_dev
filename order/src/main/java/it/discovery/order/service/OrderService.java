@@ -7,6 +7,7 @@ import it.discovery.event.OrderPayedEvent;
 import it.discovery.event.bus.EventBus;
 import it.discovery.order.domain.Order;
 import it.discovery.order.domain.OrderItem;
+import it.discovery.order.messaging.MessageProducer;
 import it.discovery.order.repository.CustomerRepository;
 import it.discovery.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,8 @@ public class OrderService {
 
     private final CustomerRepository customerRepository;
 
+    private final MessageProducer messageProducer;
+
     private final EventBus eventBus;
 
     public void complete(int orderId) {
@@ -31,7 +34,7 @@ public class OrderService {
             order.setCompleted(true);
             orderRepository.save(order);
 
-            eventBus.sendEvent(new OrderCompletedEvent(orderId, this));
+            messageProducer.sendEvent(new OrderCompletedEvent(orderId));
 
             NotificationCreatedEvent notificationEvent = new NotificationCreatedEvent(this);
             notificationEvent.setEmail(order.getCustomer().getEmail());
