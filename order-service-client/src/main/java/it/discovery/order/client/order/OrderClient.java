@@ -28,6 +28,6 @@ public class OrderClient implements OrderFacade {
 
     @Override
     public OrderDTO findById(int orderId) {
-        return restTemplate.getForObject(baseUrl, OrderDTO.class);
+        return restTemplate.getForObject(baseUrl + "/" + orderId, OrderDTO.class);
     }
 }
