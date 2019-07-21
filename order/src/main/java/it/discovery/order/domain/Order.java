@@ -1,5 +1,10 @@
 package it.discovery.order.domain;
 
+import it.discovery.event.DomainEvent;
+import it.discovery.event.OrderCancelledEvent;
+import it.discovery.event.OrderCompletedEvent;
+import it.discovery.order.command.CancelOrderCommand;
+import it.discovery.order.command.CompletedOrderCommand;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,8 +19,8 @@ import java.util.List;
 @Table(name = "ORDERS")
 public class Order {
     @Id
-    @GeneratedValue(generator="order_seq")
-    @SequenceGenerator(name="order_seq",sequenceName="ORDER_SEQ", allocationSize=1)
+    @GeneratedValue(generator = "order_seq")
+    @SequenceGenerator(name = "order_seq", sequenceName = "ORDER_SEQ", allocationSize = 1)
     private int id;
 
     private LocalDateTime createdAt;
@@ -42,6 +47,28 @@ public class Order {
 
     public double getAmount() {
         return items.stream().mapToDouble(item -> item.getPrice() * item.getNumber()).sum();
+    }
+
+    public List<DomainEvent> process(CompletedOrderCommand cmd) {
+        if (cancelled || payed || items == null || items.isEmpty()) {
+            return List.of();
+        }
+        return List.of(new OrderCompletedEvent(id));
+    }
+
+    public List<DomainEvent> process(CancelOrderCommand cmd) {
+        if (payed) {
+            return List.of();
+        }
+        return List.of(new OrderCancelledEvent(id));
+    }
+
+    public void apply(OrderCancelledEvent event) {
+        cancelled = true;
+    }
+
+    public void apply(OrderCompletedEvent event) {
+        completed = true;
     }
 
     public void addItem(OrderItem item) {

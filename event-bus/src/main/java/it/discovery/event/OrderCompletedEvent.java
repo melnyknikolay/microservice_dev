@@ -7,6 +7,6 @@ import org.springframework.context.ApplicationEvent;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderCompletedEvent {
+public class OrderCompletedEvent implements DomainEvent {
     private int orderId;
 }

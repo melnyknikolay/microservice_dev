@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderPayedEvent {
+public class OrderPayedEvent implements DomainEvent {
     private int orderId;
 }

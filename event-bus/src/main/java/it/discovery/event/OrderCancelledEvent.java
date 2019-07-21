@@ -1,15 +1,12 @@
 package it.discovery.event;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Value;
-import org.springframework.context.ApplicationEvent;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class OrderCancelledEvent extends ApplicationEvent {
+@AllArgsConstructor
+@NoArgsConstructor
+public class OrderCancelledEvent implements DomainEvent {
     private int orderId;
-
-    public OrderCancelledEvent(int orderId, Object source) {
-        super(source);
-        this.orderId = orderId;
-    }
 }
