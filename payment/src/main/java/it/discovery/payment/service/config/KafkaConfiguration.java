@@ -1,6 +1,5 @@
 package it.discovery.payment.service.config;
 
-import it.discovery.event.OrderCompletedEvent;
 import it.discovery.payment.service.PaymentService;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;

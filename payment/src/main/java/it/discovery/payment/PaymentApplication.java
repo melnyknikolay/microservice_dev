@@ -1,5 +1,6 @@
 package it.discovery.payment;
 
+import it.discovery.event.OrderCompletedEvent;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.boot.SpringApplication;
@@ -23,10 +24,15 @@ public class PaymentApplication {
 
     @Bean
     public DefaultKafkaConsumerFactory consumerFactory() {
+        JsonDeserializer<OrderCompletedEvent> deserializer = new JsonDeserializer<>(OrderCompletedEvent.class);
+        deserializer.setRemoveTypeHeaders(false);
+        deserializer.addTrustedPackages("*");
+        deserializer.setUseTypeMapperForKey(true);
+
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
                 "localhost:9092");
         return new DefaultKafkaConsumerFactory(configProps,
-                new StringDeserializer(), new JsonDeserializer());
+                new StringDeserializer(), deserializer);
     }
 }
