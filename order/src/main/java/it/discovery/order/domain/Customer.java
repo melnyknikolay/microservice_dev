@@ -13,7 +13,8 @@ import java.util.List;
 @Table
 public class Customer {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(generator="cust_seq")
+	@SequenceGenerator(name="cust_seq",sequenceName="CUST_SEQ", allocationSize=1)
 	private int id;
 
 	private LocalDateTime createdAt;

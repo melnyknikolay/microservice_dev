@@ -14,7 +14,8 @@ import java.util.List;
 @Table(name = "ORDERS")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator="order_seq")
+    @SequenceGenerator(name="order_seq",sequenceName="ORDER_SEQ", allocationSize=1)
     private int id;
 
     private LocalDateTime createdAt;

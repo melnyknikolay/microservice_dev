@@ -42,8 +42,4 @@ public class PaymentService {
         System.out.println("Charging completed");
     }
 
-    @KafkaListener(topics = "orders")
-    public void onOrderCompleted(OrderCompletedEvent event) {
-        pay(event.getOrderId());
-    }
 }
