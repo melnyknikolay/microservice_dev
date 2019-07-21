@@ -46,6 +46,12 @@ services:
       - ADV_HOST=127.0.0.1
     networks:
       - network1
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - network1
 networks:
   network1:
     driver: bridge
