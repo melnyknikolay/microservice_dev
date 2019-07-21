@@ -4,7 +4,7 @@ import it.discovery.event.NotificationCreatedEvent;
 import it.discovery.event.OrderCompletedEvent;
 import it.discovery.event.OrderPayedEvent;
 import it.discovery.event.bus.EventBus;
-import it.discovery.order.client.OrderFacade;
+import it.discovery.order.client.order.OrderFacade;
 import it.discovery.order.dto.OrderDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
