@@ -21,9 +21,6 @@ public class OrderItem {
 
     private LocalDateTime createdAt;
 
-    @OneToMany
-    private List<OrderItem> items;
-
     private int bookId;
 
     private double price;

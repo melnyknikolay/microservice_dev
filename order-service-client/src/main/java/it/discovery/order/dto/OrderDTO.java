@@ -16,4 +16,6 @@ public class OrderDTO {
     private boolean cancelled;
 
     private boolean completed;
+
+    private boolean payed;
 }
